@@ -1,0 +1,23 @@
+1. Proje oluşturulurken eklenen yapılar:
+	- Spring initilzr
+	- Type: Maven
+	- Packaging: Jar
+	- Spring web
+	- Spring data jpa
+	- Oracle Driver
+Bunların ekli haliyle bir proje oluşturuluyor. application.properties'e ilgili db
+bilgileri girildiği için, Oracle Listener ayağa kaldırıldıktan sonra otomatik olarak
+intellij idea üzerinden Database penceresinden yeni oracle Datasource eklenir.
+	Database => Add => Datasource => Oracle
+Pom config:
+	<dependency>
+		<groupId>com.oracle</groupId>
+		<artifactId>ojdbc10</artifactId>
+		<version>19.3.0.0</version>
+	</dependency>
+	
+
+3. Kodu koşmak için: Intellij Idea üzerinden Terminal => Alt+F12
+	mvn clean package && mvn spring-boot:run yada
+	mvn clean package; mvn spring-boot:run
+	

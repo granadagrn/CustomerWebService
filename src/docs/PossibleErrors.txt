@@ -1,0 +1,31 @@
+1. DB'ye bağlanamayabilir. OracleXE servisi ayakta değildir, servisi kontrol et.
+2. o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+	Database'e erişemiyor
+	application.properties'i kontrol et
+	Hibernate tanımlı olmadığı için oldu, poma hibernate eklendi:
+		<dependency>
+            		<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+        		<version>5.6.15.Final</version> <!-- or higher -->
+	        </dependency>
+	Ayrıca spring.jpa.database-platform=org.hibernate.dialect.Oracle21cDialect 12c yapıldı
+3. o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.f
+actory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: 'void org.hibernate.dialect.Oracle9i
+Dialect.registerColumnType(int, java.lang.String)'
+
+4. hibernate ve ojdbc jar arasında uyumsuzluk olduğu için pom'a aşağıdaki dependency girildi:
+		<dependency>
+            		<groupId>com.oracle</groupId>
+            		<artifactId>ojdbc7</artifactId>
+            		<version>12.1.0</version>
+        	</dependency>
+	Ancak kullanılan repoda ilgili versiyon yoktu: Could not find artifact com.oracle:ojdbc7:jar:12.1.0 in central (https://repo.maven.apache.org/maven2)
+	Bu yüzden jar dosyası manual olarak local repoya eklendi:
+		1. öncelikle ilgili jar dosyası mvnrepository'den indirildi: https://mvnrepository.com/artifact/com.oracle/ojdbc7/12.1.0.2	files:jar indirildi
+		2. C:\Users\Seda\.m2\repository\com\oracle altında ojdbc7 klasörü oluşturuldu (varsa sil)
+		3. aynı path altında admin olarak cmd aç
+		4. mvn komudunu koş:
+			mvn install:install-file -Dfile=C:\Users\Seda\.m2\repository\com\oracle\ojdbc7\ojdbc7-12.1.0.2.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0 -Dpackaging=jar
+		5. mvn clean & build
+		
+	

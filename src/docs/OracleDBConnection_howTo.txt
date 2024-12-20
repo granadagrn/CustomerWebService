@@ -1,0 +1,25 @@
+
+download ojdbc7.jar 
+https://www.oracle.com/tr/database/technologies/appdev/jdbc-downloads.html
+(ben odbc11.jar indirdim)
+
+1. Öncelikle Oracle DB bağlantısını sağlamak için Oracle DAtabase Express Edition indirilecek/kurulacak:
+	https://www.oracle.com/tr/database/technologies/xe-downloads.html
+	default user/pass:system/password
+	Kurulduktan sonra Services altında oracle servisini çalışır halde görebiliriz:
+		WNDW+R => services.msc
+		tnsnames.ora dosyası => C:\app\Seda\product\21c\dbhomeXE\network\admin\sample
+		ya da konfigurasyon WNDWS+R ile "netca" çalıştırılarak düzenlenebilir.
+2. Oracle SQL Developer indirilecek ( Version 24.3.0.284):
+	download: https://www.oracle.com/database/sqldeveloper/
+	Buradaki zip dosyası doğrudan istenen folder altında açılır ve sqldeveloper.exe çalıştırılır.
+	recomendations: https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptig/sql-developer-system-recommendations.html
+	çalışması esnasında donma olursa: Tools => Preferences => Environment => Look and Feel: Windows => Tamam
+3. Artık localhost db çalışıyor:
+	Name: localhost
+	Username: system
+	Password: password
+	Connection Type: basic
+	Hostname: localhost
+	Port: 1521
+	SID: xe
