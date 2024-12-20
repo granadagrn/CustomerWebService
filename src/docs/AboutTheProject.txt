@@ -1,0 +1,25 @@
+write a java based web service project in idea that using Spring boot, Oracle SQL, Maven, Spring Web, Spring Initalizer. Idea is configured to use javac 23.0.1
+
+1. Setup Environment
+IDE: IntelliJ IDEA
+JDK: Ensure that JDK 23.0.1 is installed and configured.
+Database: Oracle SQL
+Tools: Spring Initializr, Maven
+
+2. Project Metadata:
+
+Group: com.example
+Artifact: springboot-oracle
+Dependencies:
+Spring Web
+Spring Data JPA
+Oracle Driver
+Spring Boot DevTools (optional)
+Spring Boot Validation => Spring Boot Validation seçilebilir değil, çünkü zaten Spring Initializar içinde var. Ancak sonrasında pom'a eklenecek:
+	(böylece annotations like @NotEmpty, @Email, and @Size in your entity classes to enforce validation rules.)
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-validation</artifactId>
+	</dependency>
+
+		

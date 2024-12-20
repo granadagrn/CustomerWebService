@@ -1,0 +1,108 @@
+Sending a request in bad format (in Postman):
+	POST => http://localhost:8080/api/customers
+		{
+			"name": "",
+			"email": "invalid-email"
+		}
+	Server will return:
+		{
+			"timestamp": "2024-11-22T12:34:56.789",
+			"status": 400,
+			"error": "Bad Request",
+			"message": "Name is required; Email is invalid",
+			"path": "/api/customers"
+		}
+
+
+
+
+ "timestamp": "2024-11-22T18:12:36.945+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "trace": "org.springframework.transaction.TransactionSystemException: Could not commit JPA transaction\r\n\t
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:571)\r\n\t
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:795)\r\n\t
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:758)\r\n\t
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:698)\r\n\t
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:416)\r\n\t
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)\r\n\t
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)\r\n\t
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)\r\n\t
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)\r\n\t
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:165)\r\n\t
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)\r\n\t
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)\r\n\t
+	at jdk.proxy4/jdk.proxy4.$Proxy119.save(Unknown Source)\r\n\t
+	at com.demo.springbootoracle.service.CustomerService.saveCustomer(CustomerService.java:23)\r\n\t
+	at com.demo.springbootoracle.controller.CustomerController.createCustomer(CustomerController.java:27)\r\n\t
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\r\n\t
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)\r\n\t
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)\r\n\t
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)\r\n\t
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)\r\n\t
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)\r\n\t
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)\r\n\t
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\r\n\t
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)\r\n\t
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978)\r\n\t
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\r\n\t
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)\r\n\t
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)\r\n\t
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)\r\n\t
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)\r\n\
+	tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\t
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\t
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\r\n\t
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\t
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\r\n\t
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\t
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\r\n\t
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\t
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\
+	tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)\r\n\t
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)\r\n\t
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)\r\n\t
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)\r\n\t
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)\r\n\t
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\r\n\t
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)\r\n\t
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)\r\n\t
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)\r\n\t
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)\r\n\t
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)\r\n\t
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)\r\n\t
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)\r\n\t
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)\r\n\t
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)\r\n\t
+	at java.base/java.lang.Thread.run(Thread.java:1575)\r\n
+	Caused by: jakarta.persistence.RollbackException: Error while committing the transaction\r\n\t
+	at org.hibernate.internal.ExceptionConverterImpl.convertCommitException(ExceptionConverterImpl.java:67)\r\n\t
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:104)\r\n\t
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:562)\r\n\t
+	... 62 more\r\nCaused by: jakarta.validation.ConstraintViolationException: Validation failed for classes [com.demo.springbootoracle.entity.Customer] during persist time for groups [jakarta.validation.groups.Default, ]\n
+	List of constraint violations:[\n\tConstraintViolationImpl{interpolatedMessage='Name is required', propertyPath=name, rootBeanClass=class com.demo.springbootoracle.entity.Customer, messageTemplate='Name is required'}\n]\r\n\t
+	at org.hibernate.boot.beanvalidation.BeanValidationEventListener.validate(BeanValidationEventListener.java:161)\r\n\t
+	at org.hibernate.boot.beanvalidation.BeanValidationEventListener.onPreInsert(BeanValidationEventListener.java:84)\r\n\t
+	at org.hibernate.action.internal.EntityInsertAction.preInsert(EntityInsertAction.java:251)\r\n\t
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:106)\r\n\t
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:644)\r\n\t
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:511)\r\n\t
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:414)\r\n\t
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)\r\n\t
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)\r\n\t
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1429)\r\n\tat org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:491)\r\n\t
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2354)\r\n\tat org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1978)\r\n\t
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)\r\n\t
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)\r\n\t
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)\r\n\t
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)\r\n\t... 63 more\r\n",
+    "message": "Could not commit JPA transaction",
+    "path": "/api/customers"

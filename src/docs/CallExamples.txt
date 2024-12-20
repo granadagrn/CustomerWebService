@@ -1,0 +1,114 @@
+Call Examples for Customer Web Service:
+
+1. Get all customers:
+	GET http://localhost:8080/api/customers
+	
+2. Add a new customer:
+	POST http://localhost:8080/api/customers
+	Headers:
+		Key: Content-Type
+		Value: application/json
+	raw => JSON:
+		{
+			"name": "Jane Smith",
+			"email": "jane.smith@example.com"
+		}
+	RESPONSE: 201 - Created
+		{
+			"id": 1952,
+			"name": "Vedat Kelle",
+			"email": "vedatKelle@example.com"
+		}
+	REQUEST:
+		{
+			"name": "Vedat Kelle",
+			"email": "vedatKelle@example.com"
+		}
+	RESPONSE: 409 - Conflict
+		Customer with email vedatKelle@example.com already exists.
+		
+3. Delete a customer by Customer Id:
+	DELETE http://localhost:8080/api/customers/{id}
+		change {id} with related customer id
+		Örn: DELETE http://localhost:8080/api/customers/952
+		
+	Response: 204 - No Content: The resource was successfully deleted.
+			404 - Not Found: The resource with the given ID doesn’t exist.
+
+
+4. Delete a specific customer (with whole information):
+	DELETE http://localhost:8080/api/customers
+	REQUEST:
+		{
+			"id": 1,
+			"name": "John Doe",
+			"email": "john.doe@example.com"
+		}
+	RESPONSE: 404 - Not Found:
+		Customer not found: 1
+		
+	REQUEST:
+		{
+			"id": 4,
+			"name": "Ahmet Mithat",
+			"email": "ahmetmithat@hop.com"
+		}
+	RESPONSE: 404 - Not Found
+		Customer e-mail do not match the database record
+	REQUEST:
+		{
+			"id": 4,
+			"name": "Ahmet Mithat",
+			"email": "ahmetmithat@example.com"
+		}
+	RESPONSE: 204 - No Content : Deleted successfully.
+
+4. Delete all customers (Before adding a confirmation):
+	DELETE http://localhost:808/api/customers/all
+	RESPONSE: 204 - No Content
+	
+	
+5. Delete all customers with confirmation:
+	DELETE http://localhost:808/api/customers/all
+	RESPONSE: 400 - Bad REQUEST
+	
+	DELETE http://localhost:808/api/customers/all?confirm=true
+	RESPONSE: 204 - No Content
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Errors:
+
+1. raw => JSON:
+	{
+		"name": "",
+		"email": "invalid-email"
+	}
+	
+	Error:
+		{
+			"timestamp": "2024-11-22T12:34:56.789",
+			"status": 400,
+			"error": "Bad Request",
+			"message": "Name is required; Email is invalid",
+			"path": "/api/customers"
+		}
