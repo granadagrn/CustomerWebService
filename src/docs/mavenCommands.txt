@@ -1,0 +1,13 @@
+Customer Web Project
+	mvn steps:
+		mvn clean package
+
+pom configuration:
+	<groupId>com.demo</groupId>
+    <artifactId>customerWebService</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>CustomerWebService</name>
+    <description>CustomerWebService-OracleSpringBootMaven</description>
+    <packaging>jar</packaging>
+Bu sebeple "mvn clean package" adımı sonrası pom ile aynı düzenekte "target" dosyası oluşur. komutun doğru çalışmasıyla birlikte
+	ilgili folder altında "customerWebService-0.0.1-SNAPSHOT.jar" dosyası oluşur.

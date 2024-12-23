@@ -4,6 +4,7 @@ import com.demo.springbootoracle.entity.Address;
 import com.demo.springbootoracle.entity.Customer;
 import com.demo.springbootoracle.exception.CustomerAlreadyExistsException;
 import com.demo.springbootoracle.service.CustomerService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +41,18 @@ public class CustomerController {
     }
 
     // Update a customer (with addresses)
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customerDetails) {
-        Customer updatedCustomer = customerService.updateCustomer(id, customerDetails);
-        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    @PutMapping("/{email}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable String email, @RequestBody Customer updatedCustomer) {
+        try {
+            Customer customer = customerService.updateCustomer(email, updatedCustomer);
+            return ResponseEntity.ok(customer);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @GetMapping

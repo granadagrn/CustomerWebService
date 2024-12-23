@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CustomerService {
@@ -35,9 +37,10 @@ public class CustomerService {
 
         // Link addresses to customer
         if (customer.getAddresses() != null) {
+            Set<String> addressNames = new HashSet<>();
             for (Address address : customer.getAddresses()) {
-                if (customerRepository.existsByAddressName(address.getAddressName()).isPresent()) {
-                    throw new IllegalArgumentException("Address name already exists: " + address.getAddressName());
+                if (address.getAddressName() != null && !addressNames.add(address.getAddressName())) {
+                    throw new IllegalArgumentException("Duplicate address name for this customer: " + address.getAddressName());
                 }
                 address.setCustomer(customer); // Ensure the address is linked to the customer
             }
@@ -47,19 +50,55 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-
+    @Transactional
     // Update customer (including addresses)
-    public Customer updateCustomer(Long id, Customer customerDetails) {
-        Customer customer = getCustomerById(id);
-        customer.setName(customerDetails.getName());
-        customer.setEmail(customerDetails.getEmail());
+    public Customer updateCustomer(String email, Customer updatedCustomerData) {
+        Customer existingCustomer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Customer with email " + email + " not found."));
 
-        // Update associated addresses
-        for (Address address : customerDetails.getAddresses()) {
-            address.setCustomer(customer); // Re-link the address to the customer
-            addressRepository.save(address);
+
+        // Update customer fields
+        if (updatedCustomerData.getName() != null) {
+            existingCustomer.setName(updatedCustomerData.getName());
         }
-        return customerRepository.save(customer);
+        if (updatedCustomerData.getPhoneNumber() != null) {
+            existingCustomer.setPhoneNumber(updatedCustomerData.getPhoneNumber());
+        }
+
+        // Update addresses if provided
+        if (updatedCustomerData.getAddresses() != null && !updatedCustomerData.getAddresses().isEmpty()) {
+            Set<String> addressNames = new HashSet<>();
+
+            for (Address newAddress : updatedCustomerData.getAddresses()) {
+                if (!addressNames.add(newAddress.getAddressName())) {
+                    throw new IllegalArgumentException("Duplicate address name for this customer: " + newAddress.getAddressName());
+                }
+
+                // Check if the address already exists
+                boolean isExistingAddress = false;
+                for (Address existingAddress : existingCustomer.getAddresses()) {
+                    if (existingAddress.getAddressName() != null &&
+                            existingAddress.getAddressName().equals(newAddress.getAddressName())) {
+                        // Update existing address fields
+                        existingAddress.setCity(newAddress.getCity());
+                        existingAddress.setPostalCode(newAddress.getPostalCode());
+                        existingAddress.setState(newAddress.getState());
+                        existingAddress.setStreet(newAddress.getStreet());
+                        isExistingAddress = true;
+                        break;
+                    }
+                }
+
+                // If it's a new address, add it
+                if (!isExistingAddress) {
+                    newAddress.setCustomer(existingCustomer);
+                    existingCustomer.getAddresses().add(newAddress);
+                }
+            }
+        }
+
+        // Save and return updated customer
+        return customerRepository.save(existingCustomer);
     }
 
     public void deleteCustomerById (Long id) {
